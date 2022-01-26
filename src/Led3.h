@@ -1,15 +1,15 @@
 #ifndef MY_LED3_H
 #define MY_LED3_H
-#include <Arduino.h>
+#include <arduino.h>
 /*
  *****************************************************
  ** LED3_H                                          **
  **                                                 **
  ** This class implements standard LED on-off       **
- ** logic on a pin you specify plus a configurable  **
- ** blinking effect. It does so without any delay   **
- ** calls. (no blocking code)                       **
- ** Jan 2022 : added random light effect            **
+ ** logic on a pin you specify plus several         **
+ ** configurable mode effects. It does this without ** 
+ ** any delay calls. (no blocking code)             **
+ ** Jan 2022 : added random, flicker and welding    **
  **                                                 **
  *****************************************************
 */
@@ -23,8 +23,8 @@ enum mode {
 
 class Led3 {
   private:
-    int _pin;                           // the number of the LED pin
-    int _pin2;                          // a second pin number for afterglow effect when welding 
+    int _pin;                           // the number of the LED pin (for welding recommend blue or white LED, for flicker yellow)
+    int _pin2;                          // a second pin number for afterglow effect when welding (recommend red LED)
     unsigned long _onTime;              // milliseconds of on-time
     unsigned long _offTime;             // milliseconds of off-time
     unsigned long _maxRandomTime;       // max milliseconds of Random
@@ -45,7 +45,7 @@ class Led3 {
     void initRandom();                  // Initialization code when in random mode
 
   public:
-    Led3(byte pin);                     // Simple default definition without a pre specified on and off time.
+    Led3(byte pin);                     // Simple definition using defined pin as output
     void update();                      // update things based on elapsed time (call this as often as possible)
     bool getState();                    // Return the current state of LED (on / off) Allows parts of your code to run only when LED is on for example.
     mode getMode();                     // return the LEDs current mode

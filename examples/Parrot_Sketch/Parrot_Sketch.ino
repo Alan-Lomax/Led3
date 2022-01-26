@@ -30,12 +30,13 @@ void setup() {
       break;
     case 4:
       myLed2.setMode(Welding);
-      myLed2.configWelding(1000, 6, 10, 200, 11); // on time, multiplier for off time, flicker timing, brightness, 2nd pin = Red Led
+      myLed2.configWelding(1000, 6, 20, 100, 11); // on time, multiplier for off time, flicker timing, brightness, 2nd pin = Red Led
       break;
     case 5:
       myLed1.setMode(Flicker);            // Flicker works best on pins with PWM = 3,5,6,9,10,11 (on NANO)
       myLed1.configFlicker(25, 255);      // first value is timing, second is brightness, both are randomized inside class.
-
+      myLed3.setMode(Blink);
+      myLed3.configBlink(100, 900);
       break;
     case 6:
       myLed1.setMode(Flicker);            // Flicker works best on pins with PWM = 3,5,6,9,10,11 (on NANO)

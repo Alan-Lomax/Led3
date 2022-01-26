@@ -37,47 +37,59 @@ void Led3::update() {
       }
       break;
     case Flicker:
-      if ( millis() >= _nextTime) {                                       // It is time to do something.
-        analogWrite(_pin, random(50, 50 + _flickerIntensity));
+      if ( millis() >= _nextTime) {                             // It is time to do something.
+        int bigFlicker = random(50, 50 + _flickerIntensity);    // calculate a random flicker intensity
+        if ( bigFlicker >= 255) {
+          bigFlicker = 255;                                     // Flicker intensity is capped
+        }
+        analogWrite(_pin, bigFlicker);
         _startTime = millis();
-        _nextTime = millis() + random(20, _flickerTime);
+        _nextTime = millis() + random(10, _flickerTime);
       }
       break;
     case Welding:
       if ( millis() >= _nextTime) {                             // It is time to do something.
-        if ( _dutyState) {
-          analogWrite(_pin, random(50, 50 + _flickerIntensity));
-          _weldingDecay += 3;                                   // Add to counter for the welding afterglow
-          if ( _weldingDecay >= 255) {                          // capped
-            _weldingDecay = 255;
+        if ( _dutyState) {                                      // duty state is like a random on off (welding or no welding)
+          int bigFlicker = random(50, 70 + _flickerIntensity);  // calculate a random flicker intensity
+          if ( bigFlicker >= 255) {
+            bigFlicker = 255;                                   // Flicker intensity is capped
           }
-          analogWrite(_pin2, _weldingDecay);                    // build the after glow
+          analogWrite(_pin, bigFlicker);
+          if ( bigFlicker >= 100) {
+            _weldingDecay++;                                    // Only add to counter for the welding afterglow during bright flickers
+          }
+          if ( _weldingDecay >= 200) {                          // Afterglow is capped
+            _weldingDecay = 200;
+          }
+          analogWrite(_pin2, _weldingDecay / 2);                // build the after glow (only half brightness if main led is on)
         }
         else {
-          analogWrite(_pin, 0);
-          if (_weldingDecay >= 70) {                            // rapid decaying  once welding stops
-            _weldingDecay -= 2;
+          analogWrite(_pin, 0);                                 // main pin is off
+          if (_weldingDecay >= 100) {                           // decaying once welding stops
+            _weldingDecay -= 3;                                 // start lowering the decay value rapidly at first
             analogWrite(_pin2, _weldingDecay);
           }
-          else if (_weldingDecay >= 4) {
-            analogWrite(_pin2, _weldingDecay--);                // slower decaying once welding stops
+          else {
+            analogWrite(_pin2, _weldingDecay--);                // slower decaying later
+          }
+          if (_weldingDecay <= 3) {                             // and finally a cut of point
+            {
+              analogWrite(_pin2, 0);
+            }
+          }
+          _startTime = millis();
+          _nextTime = millis() + random(20, _flickerTime);
+        }
+        if ( millis() >= _nextDutyTime) {
+          _dutyState = !_dutyState;                               // Swap states
+          if ( _dutyState) {
+            _startTime = millis();
+            _nextDutyTime = millis() + random(20, _weldingDuty);   // calculate when next duty cycle change of state will be due.
           }
           else {
-            analogWrite(_pin2, 0);                              // cut of point
+            _startTime = millis();
+            _nextDutyTime = millis() + (_weldingDutyFactor * random(20, _weldingDuty)); // off time has a multiplier factored in
           }
-        }
-        _startTime = millis();
-        _nextTime = millis() + random(20, _flickerTime);
-      }
-      if ( millis() >= _nextDutyTime) {
-        _dutyState = !_dutyState;                                // Swap states
-        if ( _dutyState) {
-          _startTime = millis();
-          _nextDutyTime = millis() + random(20, _weldingDuty);   // calculate when next duty cycle change of state will be due.
-        }
-        else {
-          _startTime = millis();
-          _nextDutyTime = millis() + (_weldingDutyFactor * random(20, _weldingDuty)); // off time has a multiplier factored in
         }
       }
       break;
