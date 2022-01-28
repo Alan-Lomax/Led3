@@ -1,9 +1,10 @@
 # Led3
 Evolution of the Led class with multiple modes of operation. (normal, blink, random, flicker, welding)
 
-    In normal mode (the default upon instantiation) this class defines the passed pin as an output and can be turned on or off. 
-    After creating your Led3 object variable you can change its mode by calling setMode( newMode )
-    where newmode is an enumeration from this list:
+    In normal mode (the default upon instantiation) this class defines the passed pin as an output.
+    At this point the new object can only be turned on or off. However after creating
+    your Led3 object variable you can change its mode by calling setMode(newMode)
+    where newMode is an enumeration from this list:
     
     enum mode {
       Normal,
@@ -14,10 +15,10 @@ Evolution of the Led class with multiple modes of operation. (normal, blink, ran
     };
     
     Either before or after the mode change you can also call one of several configuration methods
-    to set the configuration values appropriate for your mode.
+    for your object to set the configuration values appropriate for the mode.
     
-    If a mode other than Normal has been set then any subsequent call to on or off will reset the mode back to mode = Normal.
-    (As will you setting the mode to Normal explicitely of course)
+    Any call to on or off will reset the mode back to mode = Normal.
+    (As will you setting the mode to Normal explicitly of course)
     In general the alternate modes of operation are intended for achieving animation effects on model layouts.
     Playing with the configuration constants can chnage the effects noticeably. 
     
