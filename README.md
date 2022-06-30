@@ -1,5 +1,6 @@
 # NEW
-    I have added the missing library.properties file to this repo. It was observed this file was needed on MAC implementations of the Arduino IDE.
+    I have added the missing library.properties file to this repo.
+    It was observed this file was needed on MAC implementations of the Arduino IDE.
 
 # Led3
 Evolution of the Led class with multiple modes of operation. (normal, blink, random, flicker, welding)
