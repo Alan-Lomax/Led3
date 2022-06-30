@@ -20,7 +20,7 @@ Evolution of the Led class with multiple modes of operation. (normal, blink, ran
     Any call to on or off will reset the mode back to mode = Normal.
     (As will you setting the mode to Normal explicitly of course)
     In general the alternate modes of operation are intended for achieving animation effects on model layouts.
-    Playing with the configuration constants can chnage the effects noticeably. 
+    Playing with the configuration constants can change the effects noticeably. 
     
     This class executes in a non blocking manner. (There are no delay calls).
 
