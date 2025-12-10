@@ -10,11 +10,7 @@ void setup() {
 
   myLed1.setMode(Blink);
 
-  // In the configuration below random time are configured to be between 5 and 10 seconds
-  // The third parameter = true  means state change is also random
-  //    (For example if LED is on: after the random time expires the commnad could still be to turn it on)
-  // The third parameter = false means state will always flip
-  //    (For example if LED is on: after the random time expires the commnad will always be to turn it off)
+  // In the configuration below Blink time is set as 50ms on and 500 ms off.
   myLed1.configBlink(50, 500);
 }
 
